@@ -3,7 +3,7 @@
   }
   
   :root {
-    --primary: #B1EDE8;
+    --primary: #b8dbd9;
     --secondary: #6D435A;
     --tertiary: #FF6978;
     --grey: #352D39;
@@ -11,7 +11,7 @@
   }
   
   body {
-    background: #ededed;
+    background: #FFFCF9;
     color: var(--grey);
     margin: 0;
     padding: 0;
@@ -23,7 +23,7 @@
   
   header {
     background: var(--secondary);
-    padding: 30px 25px;
+    padding: 20px 25px;
     border-bottom: 5px solid var(--primary);
   }
   
@@ -60,11 +60,13 @@
   }
   
   footer {
+    bottom: 0;
     width: 100%;
     background: var(--secondary);
     color: var(--tertiary);
-    font-size: 2.4rem;
-    padding: 20px;
+    font-size: 1.4rem;
+    height: 50px;
+    padding: 10px;
     border-top: 5px solid var(--primary);
   }
   
@@ -73,6 +75,7 @@
     margin-bottom: 5px;
     margin-top: 0;
     font-size: 4.5rem;
+    text-shadow: 1px 1px 1px black;
   }
   
   .page-content {
@@ -143,13 +146,13 @@
     font-size: 2.2rem;
     border-radius: 12px;
     position: relative;
-    top: -3px;
+    top: 3px;
     box-shadow: 0 3px var(--grey);
   }
   
   .btn:hover {
     box-shadow: 0 2px var(--grey);
-    top: -2px;
+    top: 2px;
   }
   .btn:active {
     box-shadow: 0 0px var(--grey);
