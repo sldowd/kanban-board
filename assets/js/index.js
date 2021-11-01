@@ -11,6 +11,14 @@ var taskFormHandler = function(event) {
     //get task language from form drop down
     var taskLangInput = document.querySelector("select[name='task-language']").value;
 
+    //check if values are empty strings
+    if (!taskNameInput || !taskLangInput) {
+        alert("Please fill out task form completely.");
+        formEl.reset();
+        return false;
+    }
+
+
     //package form data into object
     var taskDataObj = {
         name: taskNameDisplay,
