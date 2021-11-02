@@ -127,7 +127,15 @@ var deleteTask = function(taskId) {
 };
 
 var editTask = function(taskId) {
-    
+    //identify task
+    var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
+    //get task info (name)
+    var taskName = taskSelected.querySelector("h3.task-name").textContent;
+    //get task info (language)
+    var taskLang = taskSelected.querySelector("span.task-type").textContent;
+    //insert task info onto submit form
+    document.querySelector("input[name='task-name']").value = taskName;
+    document.querySelector("select[name='task-language']").value = taskLang;
 };
 
 var changeTaskStatus = function(taskId) {
