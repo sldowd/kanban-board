@@ -101,7 +101,7 @@
     list-style: none;
     padding: 15px;
     height: calc(100% - 50px);
-    background: rgb(19, 196, 196);
+    background: rgb(196, 196, 196);
     border-radius: 12px;
     border: 2px solid var(--grey);
   }

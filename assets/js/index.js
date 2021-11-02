@@ -1,3 +1,4 @@
+var taskIdCounter = 0;
 var formEl = document.querySelector("#task-form");
 var tasksToDoEl = document.querySelector("#tasks-to-do")
 
@@ -13,7 +14,7 @@ var taskFormHandler = function(event) {
 
     //check if values are empty strings
     if (!taskNameInput || !taskLangInput) {
-        alert("Please fill out task form completely.");
+        alert("Oops! Looks like your task is missing some information.");
         formEl.reset();
         return false;
     }
@@ -25,6 +26,8 @@ var taskFormHandler = function(event) {
         type: taskLangInput
     }
 
+    formEl.reset();
+
     //call function to create task and pass in task object data
     createTaskEl(taskDataObj);
 
@@ -34,16 +37,68 @@ var createTaskEl = function(taskDataObj) {
     //create li
     var listItemEl = document.createElement("li");
     listItemEl.className = "task-item";
-     //create div to hold task language
-     var taskLangEl = document.createElement("div");
-     taskLangEl.className = "task-info";
-     //add HTML to div
-     taskLangEl.innerHTML = "<h3 class='task-name'>" + taskDataObj.name + "</h3><span class='task-type'>" + taskDataObj.type + "</span>";
-     //append div to li
-     listItemEl.appendChild(taskLangEl);
-     
-     //add li to list
-     tasksToDoEl.appendChild(listItemEl);
+
+    //add task id as a custom attribute
+    listItemEl.setAttribute("data-task-id", taskIdCounter);
+
+    //create div to hold task language
+    var taskLangEl = document.createElement("div");
+    taskLangEl.className = "task-info";
+    //add HTML to div
+    taskLangEl.innerHTML = "<h3 class='task-name'>" + taskDataObj.name + "</h3><span class='task-type'>" + taskDataObj.type + "</span>";
+    //append div to li
+    listItemEl.appendChild(taskLangEl);
+    
+    var taskActionsEl = createTaskActions(taskIdCounter);
+    listItemEl.appendChild(taskActionsEl);
+
+    //add li to list
+    tasksToDoEl.appendChild(listItemEl);
+
+    taskIdCounter++;
+}
+
+var createTaskActions = function(taskId) {
+    var actionContainerEl = document.createElement("div");
+    actionContainerEl.className = "task-actions";
+
+    //create edit button
+    var editButtonEl = document.createElement("button");
+    editButtonEl.textContent = "Edit";
+    editButtonEl.className = "btn edit-btn";
+    editButtonEl.setAttribute("data-task-id", taskId);
+
+    actionContainerEl.appendChild(editButtonEl);
+
+    //delete btn
+    //create edit button
+    var deleteButtonEl = document.createElement("button");
+    deleteButtonEl.textContent = "Delete";
+    deleteButtonEl.className = "btn delete-btn";
+    deleteButtonEl.setAttribute("data-task-id", taskId);
+
+    actionContainerEl.appendChild(deleteButtonEl);
+
+    var statusSelectEl = document.createElement("select");
+    statusSelectEl.className = "select-status";
+    statusSelectEl.setAttribute("name", "status-change");
+    statusSelectEl.setAttribute("data-task-id", taskId);
+
+    actionContainerEl.appendChild(statusSelectEl);
+
+    var statusChoices = ["To Do", "In Progress", "Completed"];
+
+    for (var i = 0; i < statusChoices.length; i++) {
+        //create option element
+        var statusOptionEl = document.createElement("option");
+        statusOptionEl.textContent = statusChoices[i];
+        statusOptionEl.setAttribute("value", statusChoices[i]);
+
+        //append to select
+        statusSelectEl.appendChild(statusOptionEl);
+    }
+    return actionContainerEl;
+
 }
 
 formEl.addEventListener("submit", taskFormHandler);
