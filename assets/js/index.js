@@ -105,17 +105,16 @@ var createTaskActions = function(taskId) {
 
 var taskButtonHandler = function(event) {
     event.preventDefault();
+    var targetEl = event.target;
     
-    if (event.target.matches(".delete-btn")) {
+    if (targetEl.matches(".delete-btn")) {
         //get task-id
         var taskId = event.target.getAttribute("data-task-id");
         deleteTask(taskId);
-    };
-    if (event.target.matches(".edit-btn")) {
+    } else if (targetEl.matches(".edit-btn")) {
         var taskId = event.target.getAttribute("data-task-id");
         editTask(taskId);
-    };
-    if (event.target.matches(".select-status")) {
+    } else if (targetEl.matches(".select-status")) {
         var taskId = event.target.getAttribute("data-task-id");
         changeTaskStatus(taskId);
     };
@@ -136,6 +135,10 @@ var editTask = function(taskId) {
     //insert task info onto submit form
     document.querySelector("input[name='task-name']").value = taskName;
     document.querySelector("select[name='task-language']").value = taskLang;
+    //change submtit button to save task for edit mode
+    document.querySelector("#save-task").textContent = "Save Task";
+    //add task id to form element
+    formEl.setAttribute("data-task-id", taskId);
 };
 
 var changeTaskStatus = function(taskId) {
