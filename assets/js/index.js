@@ -3,6 +3,21 @@ var formEl = document.querySelector("#task-form");
 var tasksToDoEl = document.querySelector("#tasks-to-do");
 var pageContentEl = document.querySelector("#page-content");
 
+var completeEditTask = function(taskName, taskLang, taskId) {
+    //find matching task list item
+    var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
+
+    //set new values
+    taskSelected.querySelector("h3.task-name").textContent = taskName;
+    taskSelected.querySelector("span.task-type").textContent = taskLang;
+
+    formEl.reset();
+    formEl.removeAttribute("data-task-id");
+    document.querySelector("#save-task").textContent = "Add Task";
+
+    alert("Task Updated!");
+}
+
 
 var taskFormHandler = function(event) {
     event.preventDefault();
@@ -21,17 +36,25 @@ var taskFormHandler = function(event) {
         return false;
     }
 
+    //check formEl for data task id
+    var isEdit = formEl.hasAttribute("data-task-id");
 
-    //package form data into object
-    var taskDataObj = {
+    //if editing task pass data to completeEditTask()
+    if (isEdit) {
+        var taskId = formEl.getAttribute("data-task-id");
+        completeEditTask(taskNameInput, taskLangInput, taskId);
+    //no data attribute so package form data into object as normal
+    } else { 
+        var taskDataObj = {
         name: taskNameDisplay,
         type: taskLangInput
     }
 
-    formEl.reset();
+        formEl.reset();
 
-    //call function to create task and pass in task object data
-    createTaskEl(taskDataObj);
+        //call function to create task and pass in task object data
+        createTaskEl(taskDataObj);
+    }
 
 }
 
