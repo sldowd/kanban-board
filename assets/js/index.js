@@ -2,6 +2,8 @@ var taskIdCounter = 0;
 var formEl = document.querySelector("#task-form");
 var tasksToDoEl = document.querySelector("#tasks-to-do");
 var pageContentEl = document.querySelector("#page-content");
+var tasksInProgressEl = document.querySelector("#tasks-in-progress");
+var tasksCompletedEl = document.querySelector("#tasks-completed")
 
 var completeEditTask = function(taskName, taskLang, taskId) {
     //find matching task list item
@@ -31,7 +33,7 @@ var taskFormHandler = function(event) {
 
     //check if values are empty strings
     if (!taskNameInput || !taskLangInput) {
-        alert("Oops! Looks like your task is missing some information.");
+        alert("Oops! It looks like your task is missing some information.");
         formEl.reset();
         return false;
     }
@@ -137,9 +139,9 @@ var taskButtonHandler = function(event) {
     } else if (targetEl.matches(".edit-btn")) {
         var taskId = event.target.getAttribute("data-task-id");
         editTask(taskId);
-    } else if (targetEl.matches(".select-status")) {
-        var taskId = event.target.getAttribute("data-task-id");
-        changeTaskStatus(taskId);
+    // } else if (targetEl.matches(".select-status")) {
+    //     var taskId = event.target.getAttribute("data-task-id");
+    //     changeTaskStatus(taskId);
     };
 };
 
@@ -164,9 +166,24 @@ var editTask = function(taskId) {
     formEl.setAttribute("data-task-id", taskId);
 };
 
-var changeTaskStatus = function(taskId) {
+var taskStatusChangeHandler = function(event) {
+    //get item taskid
+    var taskId = event.target.getAttribute("data-task-id");
+    //get status value and convert to lowercase
+    var statusValue = event.target.value.toLowerCase();
+    //get parent task item based on task id
+    var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']")
     
+    //append li to different column based on status value
+    if (statusValue === "to do") {
+        tasksToDoEl.appendChild(taskSelected);
+    } else if (statusValue === "in progress") {
+        tasksInProgressEl.appendChild(taskSelected);
+    } else if (statusValue === "completed") {
+        tasksCompletedEl.appendChild(taskSelected);
+    }
 };
 
 formEl.addEventListener("submit", taskFormHandler);
 pageContentEl.addEventListener("click", taskButtonHandler);
+pageContentEl.addEventListener("change", taskStatusChangeHandler);
