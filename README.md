@@ -2,6 +2,8 @@
 ![License: The Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)
 [The Unlicense](http://unlicense.org/)
 
+![Screenshot of Project Tracker](./assets/images/project-tracker-image.png)
+
 ## Description
 
 Project Tracker is a KanBan style web application. Users can create, edit, and delete tasks. Users can update task status by using the status drop-down on the task item, or by simply dragging and dropping task to a different column. Tasks are made persistent by saving to and retrieving from localStorage. This application was developed using vanilla JavaScript, HTML, and CSS.
