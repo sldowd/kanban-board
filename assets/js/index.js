@@ -287,9 +287,29 @@ var dragLeaveHandler = function(event) {
 }
 
 var saveTasks = function() {
+    //use JSON.stringify because localStorage can only store strings
     localStorage.setItem("tasks", JSON.stringify(tasks));
+};
+
+var loadTasks = function() {
+    //get task strings from local storage
+    var savedTasks = localStorage.getItem("tasks");
+    if (!savedTasks) {
+        return false;
+    }
+    //parse strings back into object array
+    savedTasks = JSON.parse(savedTasks);
+
+    //iterate through tasks and pass data into createTaskEl
+    for (var i = 0; i < savedTasks.length; i++) {
+        createTaskEl(savedTasks[i]);
+    }
+
+
+
 }
 
+window.addEventListener("load", loadTasks);
 formEl.addEventListener("submit", taskFormHandler);
 pageContentEl.addEventListener("click", taskButtonHandler);
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
